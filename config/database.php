@@ -4,18 +4,20 @@ class Database {
     private $db_name;
     private $username;
     private $password;
+    private $port;
     public $conn;
 
     public function __construct() {
-        $this->host = getenv('DB_HOST');
-        $this->db_name = getenv('DB_NAME');
-        $this->username = getenv('DB_USER');
-        $this->password = getenv('DB_PASSWORD');
+        $this->host = getenv('PGHOST');
+        $this->db_name = getenv('PGDATABASE');
+        $this->username = getenv('PGUSER');
+        $this->password = getenv('PGPASSWORD');
+        $this->port = getenv('PGPORT');
     }
 
     public function getConnection() {
         $this->conn = null;
-        $connectionString = "host=$this->host dbname=$this->db_name user=$this->username password=$this->password";
+        $connectionString = "host=$this->host port=$this->port dbname=$this->db_name user=$this->username password=$this->password";
 
         $this->conn = pg_connect($connectionString);
 
@@ -30,3 +32,4 @@ class Database {
         pg_close($this->conn);
     }
 }
+?>
